@@ -1,0 +1,24 @@
+img{
+    border-radius: 5px;
+    height: auto;
+}
+.cont {
+    background: url(/assets/background.jpg) center center no-repeat;
+    background-size: cover;
+  }
+
+
+  @media (max-width: 1000px) {
+    .navbar {
+      background: var(--bs-dark);
+    }
+  
+    .hero .image-container {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .hero .text-container {
+      text-align: center;
+    }
+  }

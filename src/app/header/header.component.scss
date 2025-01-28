@@ -1,0 +1,17 @@
+$dark: #2b3041;
+img{
+    width: 30px;
+    margin-top: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
+.navbar-brand{
+    position: relative;
+}
+
+
+.navbar.btn-outline-light:hover{
+    background-color: #2b3041;
+}
