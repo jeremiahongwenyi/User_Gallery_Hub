@@ -1,0 +1,95 @@
+
+
+<div class="app-login-form mt-7">
+    <app-snackbar [errorMessage]="errorMessage" *ngIf="errorMessage"></app-snackbar>
+    <h2 class="text-center mb-3">{{ isLoginMode ? 'Login' : 'Signup'}} Here</h2>
+    <!-- <app-loader *ngIf="isLoading"></app-loader> -->
+     <form #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)" *ngIf="!isLoading">
+        <div class="form-group mb-3">
+            <label for="ema">Email Address</label>
+            <input type="email"
+            id="ema" 
+                class="form-control"
+                placeholder="Email address" 
+                name="email" 
+                ngModel
+                required
+                email
+            >
+        </div>
+        <div class="form-group mb-3" >
+            <label for="pass">Password</label>
+            <input type="password"
+            id="pass"
+               class="form-control" 
+                placeholder="Password" 
+                name="password" 
+                ngModel
+                required
+                minlength="8"
+            >
+        </div>           
+        <div class="d-grid">
+            <button type="submit" 
+            class="btn btn-primary text-white fw-bold mb-1"
+            [disabled]="authForm.invalid"
+        >{{ isLoginMode ? 'Login' : 'Signup'}}</button>
+        </div>
+        <p>{{isLoginMode ? 'Do not have an accout yet?' : 'Already have an account?'}}
+            <button 
+                class="app-toggle-btn" 
+                type="button" 
+                (click)="onSwitchMode()"
+            >{{isLoginMode ? 'Register Here.' : 'Login Here'}}</button>
+        </p>
+    </form> 
+
+
+</div>
+
+
+
+
+
+
+<!-- <h2 class="text-center mb-3">{{ isLoginMode ? 'Login' : 'Signup'}} Here</h2> -->
+    <!-- <app-loader *ngIf="isLoading"></app-loader> -->
+    <!-- <form #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)" *ngIf="!isLoading">
+        
+        <div class="form-group mb-3">
+            <label>Email Address</label>
+            <input type="email" 
+                class="form-control"
+                placeholder="Email address" 
+                name="email" 
+                ngModel
+                required
+                email
+            >
+        </div>
+        <div class="form-group mb-3">
+            <label>Password</label>
+            <input type="password"
+               class="form-control" 
+                placeholder="Password" 
+                name="password" 
+                ngModel
+                required
+                minlength="8"
+            >
+        </div>           
+        <div class="d-grid">
+            <button type="submit" 
+            class="btn btn-primary text-white fw-bold"
+            [disabled]="authForm.invalid"
+        >{{ isLoginMode ? 'Login' : 'Signup'}}</button>
+        </div>
+        <p><button type="button" (click)="onSwitchMode()">{{isLoginMode? 'Register Here' : 'Login Here'}}</button></p>
+    </form> -->
+
+    <!-- <button (click)="onSwitchMode()">Submit</button>
+
+    
+ -->
+
+

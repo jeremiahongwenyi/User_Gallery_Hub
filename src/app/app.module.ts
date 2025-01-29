@@ -13,6 +13,8 @@ import { AlbumComponent } from './album/album.component';
 import { HomeComponent } from './home/home.component';
 import { PhotoComponent } from './photo/photo.component';
 import { Error404Component } from './error404/error404.component';
+import { LoginComponent } from './login/login.component';
+import { SnackbarComponent } from './utilities/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { Error404Component } from './error404/error404.component';
     AlbumComponent,
     HomeComponent,
     PhotoComponent,
-    Error404Component
+    Error404Component,
+    LoginComponent,
+    SnackbarComponent
   ],
   imports: [
     BrowserModule,

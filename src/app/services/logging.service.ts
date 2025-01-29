@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggingService {
 
-  constructor() { }
+  constructor(
+    private http:HttpClient
+  ) { }
+
+  ApiUrl:string =environment.firebaseConfig.firebaseDatabaseURL;
 
   logError(data: {statusCode: number, errorMessage: string, datetime: Date}){
-    // this.http.post('https://angularhttpclient-f1d30-default-rtdb.firebaseio.com/log.json', data)
-    // .subscribe();
     console.log(data + 'arrived');
     console.log(data.statusCode);
+    this.http.post(`${this.ApiUrl}log.json`, data)
+    .subscribe();
     
-    
+       
 }
 }

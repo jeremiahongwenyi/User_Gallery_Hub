@@ -20,8 +20,8 @@ export class UserComponent implements OnInit{
   selectedUserId:number=null
   selectedUser:User=null;
   userAlbums:Album[]=[];
-  isLoading:boolean=false;
-  responseArrived:boolean=false
+  isLoading=false;
+  responseArrived=false
 
   
         
@@ -42,8 +42,15 @@ export class UserComponent implements OnInit{
       })
   }
 
-  getUser(){
-    this.userService.getUserWithId(this.selectedUserId).subscribe({
+  getUser(){   
+  if (typeof window !== 'undefined' && window.localStorage){
+    const selectedUser = localStorage.getItem('selectedUser')
+    if (selectedUser){
+      this.responseArrived=true;
+      this.selectedUser = JSON.parse(selectedUser)
+
+    } else {
+      this.userService.getUserWithId(this.selectedUserId).subscribe({
         next:(user)=>{
             this.selectedUser=user
             console.log(this.selectedUser);
@@ -54,23 +61,41 @@ export class UserComponent implements OnInit{
           
         }
       })
+    }
+  }  else {
+    return;
+  }
+    
   }
 
   getAlbums(){
     this.isLoading=true;
-      this.userService.getAlbumsForUser(this.selectedUserId).subscribe({
-        next:(albums)=>{
-          this.userAlbums=albums;
-          this.isLoading = false;
-          this.responseArrived = true;
-          console.log(this.userAlbums);
-          
-      },
-      error:(err)=>{
-        console.log(err);
+    if(typeof window !== 'undefined' && window.localStorage){
+      const userAlbums = localStorage.getItem('userAlbums')
+      
+      if(userAlbums){
+        this.userAlbums=JSON.parse(userAlbums)
+        this.isLoading= false;
         
+      } else {
+        this.userService.getAlbumsForUser(this.selectedUserId).subscribe({
+          next:(albums)=>{
+            this.userAlbums=albums;
+            this.isLoading = false;
+            this.responseArrived = true;
+            console.log(this.userAlbums);
+            
+        },
+        error:(err)=>{
+          console.log(err);
+          
+        }
+        })
       }
-      })
+    } else {
+      return;
+    }
+      
   }
 
 onAlbumClicked(album:Album){

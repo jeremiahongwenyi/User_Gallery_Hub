@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user';
 import { Album } from '../models/album';
 import { Router } from '@angular/router';
 import { Photo } from '../models/photo';
@@ -20,8 +19,8 @@ export class AlbumComponent implements OnInit{
     selectedAlbumId:number=null;
     selectedAlbum:Album=null;
     albumPhotos:Photo[]=[];
-    isLoading:boolean=false;
-    responseArrived:boolean=false
+    isLoading=false;
+    responseArrived=false
 
   ngOnInit(): void {
       this.userService.$clickedAlbumId.subscribe({
@@ -39,37 +38,61 @@ export class AlbumComponent implements OnInit{
   }
 
   getAlbum(){
-    this.userService.getAlbumWithId(this.selectedAlbumId).subscribe({
-        next:(album)=>{
-            this.selectedAlbum=album
-            console.log(this.selectedAlbum);
+    if(typeof window !== 'undefined' && window.localStorage){
+      const selectedAlbum = localStorage.getItem('selectedAlbum')
+      if(selectedAlbum){
+        this.selectedAlbum=JSON.parse(selectedAlbum)
+        this.selectedAlbumId = this.selectedAlbum[0].id
+    
+        
+      }else {
+        this.isLoading=true;
+        this.userService.getAlbumWithId(this.selectedAlbumId).subscribe({
+          next:(album)=>{
+              this.selectedAlbum=album
+              console.log(this.selectedAlbum);
+              this.isLoading=false;
+              
+          },
+          error:(err)=>{
+            console.log(err);
             
-        },
-        error:(err)=>{
-          console.log(err);
-          
-        }
-      })
+          }
+        })
+      }
+  } else {
+    return;
   }
+}
 
   getPhotos(){
     this.isLoading=true;
-      this.userService.getPhotosForAlbum(this.selectedAlbumId).subscribe({
-        next:(photos)=>{
-          this.albumPhotos=photos;
-          this.isLoading = false;
-          this.responseArrived = true;
-          console.log(this.albumPhotos);
-          
-      },
-      error:(err)=>{
-        console.log(err);
-        
-      }
-      })
+    if(typeof window !== 'undefined' && window.localStorage){
+      const selectedAlbumPhotos = localStorage.getItem('selectedAlbumPhotos')
+      if(selectedAlbumPhotos){
+        this.albumPhotos=JSON.parse(selectedAlbumPhotos)
+        this.isLoading= false;
+        this.responseArrived=true
+        } else {
+          this.userService.getPhotosForAlbum(this.selectedAlbumId).subscribe({
+            next:(photos)=>{
+              this.albumPhotos=photos;
+              this.isLoading = false;
+              this.responseArrived = true;
+              console.log(this.albumPhotos);
+              
+          },
+          error:(err)=>{
+            console.log(err);
+            
+          }
+          })
+        }
+
+      
   }
 
 }
 
-
+}
 
