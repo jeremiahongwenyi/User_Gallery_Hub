@@ -1,0 +1,31 @@
+<div class=" table-container mt-6">
+    <div class="d-flex justify-content-center mb-8 mt-9 " *ngIf="isLoading">
+      <div class="spinner-border spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+          <div *ngIf="responseArrived">
+              <h1>Album Id: {{selectedAlbumId}}</h1>
+              <h1>Photo Information</h1>
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Thumbnail Url</th>
+                    <th>URL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let photo of albumPhotos; let i=index" >
+                    <td>{{i+1}}</td>
+                    <td>{{photo.title}}</td>
+                    <td>{{photo.thumbnailUrl}}</td>
+                    <td>{{photo.url}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </div>
+  
+      

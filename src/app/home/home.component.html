@@ -1,0 +1,32 @@
+<div class=" table-container mt-6">
+    <div class="d-flex justify-content-center mb-8 mt-9 " *ngIf="isLoading">
+      <div class="spinner-border spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+          <div *ngIf="responseArrived">
+              <h1>Current Users</h1>
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>No of Albums</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of allUsers; let i=index" (click)="onRowClicked(user)">
+                    <td>{{i+1}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.albumCount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </div>
+  
+      

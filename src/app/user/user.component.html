@@ -1,85 +1,29 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="table-container">
-            <h1>User Information</h1>
+<div class=" table-container mt-6">
+  <div class="d-flex justify-content-center mb-8 mt-9 "  *ngIf="isLoading">
+    <div class="spinner-border spinner" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+        <div *ngIf="responseArrived">
+            <h1>User: {{selectedUser[0].name}} </h1>
+            <h1> Album Information</h1>
             <table class="styled-table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <th>Username</th>
-                  <th>Email</th>
+                  <th>Album Id</th>
+                  <th>Title</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Jeremiah Ongwenyi</td>
-                  <td>johndoe</td>
-                  <td>johnexample.com</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jane Smith</td>
-                  <td>janesmith</td>
-                  <td>janeexample.com</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Michael Brown</td>
-                  <td>mikebrown</td>
-                  <td>mikeexample.com</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Emily Clark</td>
-                  <td>emilyc</td>
-                  <td>emilyample.com</td>
+                <tr *ngFor="let album of userAlbums; let i=index" (click)="onAlbumClicked(album)">
+                  <td>{{i+1}}</td>
+                  <td>{{album.id}}</td>
+                  <td>{{album.title}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
     </div>
 
-    <!-- <div class="col-md-6">
-        <div class="table-container">
-            <h1>User Information</h1>
-            <table class="styled-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Jeremiah Ongwenyi</td>
-                  <td>johndoe</td>
-                  <td>johnexample.com</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jane Smith</td>
-                  <td>janesmith</td>
-                  <td>janeexample.com</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Michael Brown</td>
-                  <td>mikebrown</td>
-                  <td>mikeexample.com</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Emily Clark</td>
-                  <td>emilyc</td>
-                  <td>emilyample.com</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-    </div> -->
-</div>
+    
