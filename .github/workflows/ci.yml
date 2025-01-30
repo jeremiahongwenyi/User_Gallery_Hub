@@ -43,7 +43,7 @@ jobs:
         run: npm install -g ts-node typescript
 
       - name: Build
-        run: npm run build -- --configuration production
+        run: npm run build User_Gallery_Hub -- --configuration production
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
@@ -71,7 +71,7 @@ jobs:
         run: npm install -g ts-node typescript
 
       - name: Build
-        run: npm run build -- --configuration production
+        run: npm run build User_Gallery_Hub -- --configuration production
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
@@ -82,4 +82,9 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        run: vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }} --name user-gallery-hub
+        run: |
+          vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }} \
+            --build-env FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} \
+            --build-env FIREBASE_SIGNUP_API=${{ secrets.FIREBASE_SIGNUP_API }} \
+            --build-env FIREBASE_SIGNIN_API=${{ secrets.FIREBASE_SIGNIN_API }} \
+            --build-env FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
