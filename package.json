@@ -11,6 +11,8 @@
     "serve:ssr:User_Gallery_Hub": "node dist/user-gallery-hub/server/server.mjs",
     "lint": "ng lint"
   },
+
+  
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.2.0",
