@@ -11,8 +11,6 @@
     "serve:ssr:User_Gallery_Hub": "node dist/user-gallery-hub/server/server.mjs",
     "lint": "ng lint"
   },
-
-  
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.2.0",
@@ -30,6 +28,7 @@
     "express": "^4.18.2",
     "puppeteer": "^24.1.1",
     "rxjs": "~7.8.0",
+    "ts-node": "^10.9.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
