@@ -78,8 +78,6 @@ describe('LoginComponent', () => {
       } as AuthResponse)
     );
     
-    
-
     component.isLoginMode = false;
     component.onFormSubmitted({ value: { email: 'test@example.com', password: 'password' }, reset: () => { return } } as NgForm);
 
