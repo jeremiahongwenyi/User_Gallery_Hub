@@ -1,11 +1,8 @@
-// Import puppeteer for Chrome executable
-const puppeteer = require('puppeteer');
-process.env.CHROME_BIN = puppeteer.executablePath();
-
+// Remove the puppeteer configuration at the top
 module.exports = function(config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],  // Added Angular framework
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -14,9 +11,9 @@ module.exports = function(config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      clearContext: false,  // leave Jasmine Spec Runner output visible
+      clearContext: false,
       jasmine: {
-        timeoutInterval: 10000  // Increased timeout for CI environment
+        timeoutInterval: 10000
       }
     },
     coverageReporter: {
@@ -32,17 +29,17 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['ChromeHeadlessCI'],
+    browsers: ['ChromeHeadless'],  // Changed this
     customLaunchers: {
-      ChromeHeadlessCI: {
+      ChromeHeadless: {  // Simplified this
         base: 'ChromeHeadless',
         flags: [
           '--no-sandbox',
+          '--headless',
           '--disable-gpu',
           '--disable-dev-shm-usage',
-          '--disable-web-security',
+          '--no-proxy-server',
           '--remote-debugging-port=9222',
-          '--headless=new'  // Updated to use the new headless mode
         ]
       }
     },
