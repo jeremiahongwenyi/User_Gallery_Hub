@@ -3,8 +3,18 @@
   "name": "user_gallery_app",
   "builds": [
     {
-      "src": "dist/user-gallery-hub/**/*",
+      "src": "dist/user-gallery-hub/browser/**/*",
       "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/user-gallery-hub/browser/$1"
+    },
+    {
+      "src": "/.*",
+      "dest": "/dist/user-gallery-hub/browser/index.html"
     }
   ],
   "build": {
