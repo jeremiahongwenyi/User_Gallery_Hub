@@ -20,16 +20,40 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "22" # You can change this to your preferred version
+          node-version: "20" # Changed to 20 as Node 22 is still in development
+          cache: "npm" # Added caching for faster builds
 
       - name: Install dependencies
         run: |
-          npm install
+          npm ci  # Changed to ci for cleaner installs in CI environment
+
+      # Added Puppeteer dependencies
+      - name: Install Puppeteer Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev
 
       - name: Run Linter
-        run: |
-          npm run lint  # Ensure youe linting script in your package.json
+        run: npm run lint
 
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+
+      # Added Chrome configuration check
+      - name: Check Chrome Configuration
+        run: |
+          google-chrome --version
+          which google-chrome
+
+      # Modified test command with additional flags
       - name: Run Tests
         run: |
-          npm run test  # Ensure you have a test script in your package.json
+          npm run test -- --no-watch --no-progress
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+
+      # Optional: Added build step if you want to ensure the project builds successfully
+      - name: Build
+        run: npm run build -- --configuration production
