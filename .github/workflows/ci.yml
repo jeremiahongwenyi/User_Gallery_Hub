@@ -1,0 +1,35 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - jeremiah
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # You can change this to your preferred version
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run Linter
+        run: |
+          npm run lint  # Ensure youe linting script in your package.json
+
+      - name: Run Tests
+        run: |
+          npm run test  # Ensure you have a test script in your package.json
