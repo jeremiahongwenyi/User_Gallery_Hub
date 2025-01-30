@@ -38,7 +38,7 @@ export class LoginComponent {
       this.authObs = this.authService.signup(email, password);
     }
 
-    this.authObs.subscribe({
+    this.authObs?.subscribe({
       next: (res) => { 
         console.log(res);
         this.isLoading = false; 

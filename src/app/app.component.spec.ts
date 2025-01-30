@@ -1,17 +1,31 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';  
 
 describe('AppComponent', () => {
+  let fixture;
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule.withRoutes([
+          { path: '', component: HomeComponent }  
+        ]),
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        HomeComponent, 
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    
   });
 
   it('should create the app', () => {
@@ -26,10 +40,23 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('User_Gallery_Hub');
   });
 
-  it('should render title', () => {
+  it('should render header and footer components', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, User_Gallery_Hub');
+    
+    const headerElement = compiled.querySelector('app-header');
+    expect(headerElement).not.toBeNull();
+    
+    const footerElement = compiled.querySelector('app-footer');
+    expect(footerElement).not.toBeNull();
   });
+
+  it('should render router outlet correctly', () => {
+    fixture.detectChanges();
+    const routerOutlet = fixture.nativeElement.querySelector('router-outlet');
+    expect(routerOutlet).not.toBeNull();
+  });
+
+  
 });

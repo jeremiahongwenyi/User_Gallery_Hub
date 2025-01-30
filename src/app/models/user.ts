@@ -20,5 +20,6 @@ export interface User {
       catchPhrase: string,
       bs: string,
     }
+    albumCount?:number;
 }
 

@@ -17,7 +17,7 @@ export class AlbumComponent implements OnInit{
     ){}
 
     selectedAlbumId:number=null;
-    selectedAlbum:Album=null;
+    selectedAlbum:Album[]=null;
     albumPhotos:Photo[]=[];
     isLoading=false;
     responseArrived=false
@@ -49,7 +49,7 @@ export class AlbumComponent implements OnInit{
         this.isLoading=true;
         this.userService.getAlbumWithId(this.selectedAlbumId).subscribe({
           next:(album)=>{
-              this.selectedAlbum=album
+              this.selectedAlbum=[album]
               console.log(this.selectedAlbum);
               this.isLoading=false;
               

@@ -79,7 +79,6 @@ subscribeUserAndAlbums(){
 }
 
 onRowClicked(user){
-  console.log('clicked');
   this.userService.emitUser(user.id);
   this.router.navigate(['/users'])
 }

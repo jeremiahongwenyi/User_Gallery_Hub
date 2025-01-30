@@ -23,7 +23,7 @@ export class AuthService {
   signInApi:string = environment.firebaseConfig.firebaseSignInApi
   apiKey:string =environment.firebaseConfig.firebaseApiKey
   Authuser = new BehaviorSubject<AuthUser>(null);
-  private tokenExpiretimer:NodeJS.Timeout|null;
+  private tokenExpiretimer= null;
 
   signup(email, password){
     const data = {email: email, password: password, returnSecureToken: true};
