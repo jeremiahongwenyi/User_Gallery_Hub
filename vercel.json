@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/angular"
+      }
+    ],
+    "build": {
+      "env": {
+        "FIREBASE_API_KEY": "@AIzaSyChWiDZzPAzAxQjCk102RSlImTtPG1PxNM",
+        "FIREBASE_SIGNUP_API": "@https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
+        "FIREBASE_SIGNIN_API": "@https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=",
+        "FIREBASE_DATABASE_URL": "@https://authentication-23e9a-default-rtdb.firebaseio.com/"
+      }
+    }
+  }
