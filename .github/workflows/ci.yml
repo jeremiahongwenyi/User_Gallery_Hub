@@ -43,5 +43,15 @@ jobs:
           export CHROME_BIN=/usr/bin/google-chrome
           npm run test -- --watch=false --browsers=ChromeHeadless
 
+          - name: Install ts-node
+        run: npm install -g ts-node typescript
+
       - name: Build
         run: npm run build -- --configuration production
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
+          FIREBASE_SIGNIN_API: ${{ secrets.FIREBASE_SIGNIN_API }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+
+      

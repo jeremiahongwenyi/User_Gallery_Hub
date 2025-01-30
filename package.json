@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "config": "ts-node set-env.ts",
+    "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:User_Gallery_Hub": "node dist/user-gallery-hub/server/server.mjs",
