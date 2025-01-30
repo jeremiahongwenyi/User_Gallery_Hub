@@ -1,17 +1,17 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/angular"
-    }
-  ],
-  "build": {
-    "env": {
-      "FIREBASE_API_KEY": "@firebase_api_key",
-      "FIREBASE_SIGNUP_API": "@firebase_signup_api",
-      "FIREBASE_SIGNIN_API": "@firebase_signin_api",
-      "FIREBASE_DATABASE_URL": "@firebase_database_url"
+    "version": 2,
+    "builds": [
+      {
+        "src": "dist/user-gallery-hub/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "build": {
+      "env": {
+        "FIREBASE_API_KEY": "@firebase_api_key",
+        "FIREBASE_SIGNUP_API": "@firebase_signup_api",
+        "FIREBASE_SIGNIN_API": "@firebase_signin_api",
+        "FIREBASE_DATABASE_URL": "@firebase_database_url"
+      }
     }
   }
-}
