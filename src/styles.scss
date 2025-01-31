@@ -57,6 +57,12 @@ $spacers: (
   overflow: hidden;
 }
 
+.head{
+  text-align: center;
+  color: #1c59d6;
+  margin-bottom: 20px;
+}
+
 .spinner{
   width: 40px;
   height: 40px;
@@ -119,6 +125,19 @@ $spacers: (
 }
 
 /* Responsive Design with Adjusted Font Size */
+
+@media(max-width:382px){
+  .head{
+    margin-top: 20px;
+  }
+}
+@media (max-width: 576px) {
+  .table-container {
+    padding: 10px;
+    margin: 20px auto;
+  }
+}
+
 @media (max-width: 768px) {
   .table-container {
     padding: 10px;
