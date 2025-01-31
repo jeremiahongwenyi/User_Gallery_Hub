@@ -15,7 +15,14 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a routerLink="/login" class="nav-link fw-semibold">Home</a>
+                   <div
+                   (click)="onHomeClicked()"
+                      (keydown)="onHomeClicked()"
+                      tabindex="0" 
+                      role="button" 
+                      aria-label="Navigate to home section">
+                    <a  class="nav-link fw-semibold">Home</a>
+                   </div>
                 </li>
                 <li class="nav-item">
                     <div

@@ -55,4 +55,16 @@ export class HeaderComponent implements OnInit {
     this.authService.logout()
     this.isLoggedIn=false
   }
+
+  onHomeClicked(){
+    if (typeof window !== 'undefined' && window.localStorage) {
+      if (localStorage.getItem('Authuser')&& localStorage.getItem('users')) {
+    this.router.navigate(['/home'])
+      } else {
+        this.router.navigate(['/login'])
+      }
+  } else {
+    return;
+  }
+}
 }
