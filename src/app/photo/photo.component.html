@@ -1,6 +1,6 @@
 <div class="image-container mt-7  mb-7">
 
-  <img src="assets/photo.jpg" alt="" class="img" />
+  <img [src]="photo.url" alt="" class="img" *ngFor="let photo of allPhotos" />
 
   <div>
    <span class="span fw-bold" *ngFor="let photo of allPhotos">Title: {{photo.title}} </span>
