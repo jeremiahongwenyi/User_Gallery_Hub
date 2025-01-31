@@ -1,8 +1,19 @@
-<div class="row">
-    <div class="col-lg-6">
-      <div class="image-container">
-        <img src="images/description.png" alt="" class="img-fluid" />
-      </div>
-    </div>
+<div class="container mt-7 ms-8 mb-7">
 
-    <p>image</p>
+  <img src="assets/photo.jpg" alt="" class="img" />
+
+  <div>
+   <span class="span" *ngFor="let photo of allPhotos">Title: {{photo.title}} </span>
+  <button class="button" title="Edit" 
+  (click)="editClicked()">
+    edit
+   </button>
+   <div *ngIf="isEditMode">
+    <input type="text" placeholder="input new title" required>
+    <button class="btn btn-secondary" (click)="submitClicked()">submit</button>
+   </div>
+  </div>
+</div>
+
+
+

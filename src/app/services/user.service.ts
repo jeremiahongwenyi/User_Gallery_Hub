@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../models/user';
-import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError, tap, map } from 'rxjs';
 import { Album } from '../models/album';
 import { Photo } from '../models/photo';
 import { LoggingService } from './logging.service';
@@ -81,6 +81,46 @@ export class UserService {
   emitAlbum(albumId) {
     this.clickedAlbumId.next(albumId);
   }
+
+
+
+  getPhotos(): Observable<Photo[]> { 
+    return this.http.get<Record<string, Photo>>(
+      `${environment.firebaseConfig.firebaseDatabaseURL}/photos.json`,
+      { observe: 'body' }
+    ).pipe(
+      map((response) => {
+        // TRANSFORM DATA
+        const photos: Photo[] = [];  // Use 'const' since photos are never reassigned
+        console.log(response);
+  
+        // Iterate through the response and map the data
+        for (const key in response) {  // Use 'const' since 'key' is not reassigned
+          if (Object.hasOwn(response, key)) {
+            photos.push({ ...response[key] });  // Add the photo object to the photos array
+          }
+        }
+  
+        return photos;
+      }),
+      catchError(this.handleError.bind(this))
+    );
+  }
+  
+
+  
+
+
+ editPhoto(id: number | undefined, data: Photo){
+  return this.http.put(`${environment.firebaseConfig.firebaseDatabaseURL}/photos+id+'.json`, data)
+  .pipe(catchError((err) => {
+      //Write the logic to log errors
+      const errorObj = {statusCode: err.status, errorMessage: err.message, datetime: new Date()}
+      this.loggingService.logError(errorObj);
+      return throwError(() => err);
+  }))
+  
+}
 
    
    private handleError(err:HttpErrorResponse) {
