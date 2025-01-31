@@ -2,7 +2,7 @@
     "version": 2,
     "name": "user-gallery-hub",
     "framework": "angular",
-    "outputDirectory": "dist/user-gallery-hub/browser",
+    "outputDirectory": "dist/user-gallery-hub/browser/browser",
     "routes": [
       { "handle": "filesystem" },
       { 
