@@ -13,7 +13,19 @@
     border: none;
     border-radius: 3px;
     display: inline-block;
-    padding: 8px 16px;
+    padding: 4px 8px;
+  }
+
+  .buttons{
+    background-color: #10bcee;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 4px 20px;
+    margin-top: 3px;
+    margin-left: 0;
   }
   
   .button:hover {

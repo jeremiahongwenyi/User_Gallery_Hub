@@ -59,6 +59,7 @@ logout(){
     localStorage.removeItem('selectedUser');
     localStorage.removeItem('selectedAlbum');
     localStorage.removeItem('selectedAlbumPhotos');
+    localStorage.removeItem('allPhotos');
 
     if(this.tokenExpiretimer){
         clearTimeout(this.tokenExpiretimer);

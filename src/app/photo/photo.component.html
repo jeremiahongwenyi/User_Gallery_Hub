@@ -3,14 +3,15 @@
   <img src="assets/photo.jpg" alt="" class="img" />
 
   <div>
-   <span class="span" *ngFor="let photo of allPhotos">Title: {{photo.title}} </span>
-  <button class="button" title="Edit" 
+   <span class="span fw-bold" *ngFor="let photo of allPhotos">Title: {{photo.title}} </span>
+  <button class="button ms-2" title="Edit" 
   (click)="editClicked()">
     edit
    </button>
    <div *ngIf="isEditMode">
-    <input type="text" placeholder="input new title" required>
-    <button class="btn btn-secondary" (click)="submitClicked()">submit</button>
+    <input type="text" placeholder="input new title" required
+    [(ngModel)]="newTitle">
+    <button class="buttons " (click)="submitClicked()">submit</button>
    </div>
   </div>
 </div>
