@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "user-gallery-hub",
+    "buildCommand": "npm run build User_Gallery_Hub -- --configuration production",
+    "outputDirectory": "dist/user-gallery-hub/browser",
+    "installCommand": "npm install",
+    "framework": "angular",
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.html"
+      }
+    ]
+  }
