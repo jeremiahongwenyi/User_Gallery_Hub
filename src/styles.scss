@@ -30,7 +30,6 @@ $btn-padding-y-sm: $button-padding-y;
 $btn-padding-y-lg: $button-padding-y;
 $navbar-toggler-border-radius: 5px;
 
-
 // Spacers
 $spacer: 1rem !default;
 $spacers: (
@@ -46,26 +45,22 @@ $spacers: (
   9: $spacer * 15,
 ) !default;
 
-
-
 /* styles.css */
 
-  
 .table-container {
   margin: 50px auto;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
 }
-
 
 .spinner{
   width: 40px;
   height: 40px;
 }
-
-
 
 /* General table styling */
 .styled-table {
@@ -74,6 +69,7 @@ $spacers: (
   margin: 20px 0;
   font-size: 16px;
   text-align: left;
+  table-layout: fixed; /* Ensure all columns fit within the screen */
 }
 
 .styled-table thead tr {
@@ -87,6 +83,9 @@ $spacers: (
 .styled-table td {
   padding: 12px 15px;
   border: 1px solid #ddd;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .styled-table tbody tr {
@@ -106,48 +105,57 @@ $spacers: (
   color: #333;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .styled-table thead {
-    display: none;
-  }
-
-  .styled-table tbody tr {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border: none;
-  }
-
-  .styled-table tbody td {
-    padding: 10px;
-    text-align: right;
-    position: relative;
-  }
-
-  .styled-table tbody td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #1c59d6;
-  }
-}
-
 /* Styling for the table */
 .styled-table th:first-child, 
 .styled-table td:first-child {
-text-align: center; /* Center-align the numbering */
-width: 50px;        /* Make the column narrower */
-font-weight: bold;
+  text-align: center; /* Center-align the numbering */
+  width: 50px;        /* Make the column narrower */
+  font-weight: bold;
 }
 
 /* Optional: Keep the hover effect consistent */
 .styled-table tbody tr:hover td:first-child {
-background-color: #d0e4fc; /* Match the row hover effect */
+  background-color: #d0e4fc; /* Match the row hover effect */
 }
 
+/* Responsive Design with Adjusted Font Size */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+    margin: 20px auto;
+  }
+
+  .styled-table {
+    font-size: 12px; /* Reduce font size for smaller screens */
+  }
+
+  .styled-table th, 
+  .styled-table td {
+    padding: 8px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .table-container {
+    width: 95%;
+    margin: 30px auto;
+  }
+
+  .styled-table {
+    font-size: 14px;
+  }
+
+  .styled-table th, 
+  .styled-table td {
+    padding: 10px 12px;
+  }
+}
+
+@media (min-width: 993px) {
+  .table-container {
+    max-width: 1200px;
+    margin: 50px auto;
+  }
+}
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
