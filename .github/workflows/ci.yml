@@ -49,6 +49,7 @@ jobs:
           FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
           FIREBASE_SIGNIN_API: ${{ secrets.FIREBASE_SIGNIN_API }}
           FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          API_URL: ${{ secrets.API_URL }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -77,6 +78,7 @@ jobs:
           FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
           FIREBASE_SIGNIN_API: ${{ secrets.FIREBASE_SIGNIN_API }}
           FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          API_URL: ${{ secrets.API_URL }}
 
       - name: Install Vercel CLI
         run: npm install -g vercel
@@ -87,4 +89,5 @@ jobs:
             --build-env FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} \
             --build-env FIREBASE_SIGNUP_API=${{ secrets.FIREBASE_SIGNUP_API }} \
             --build-env FIREBASE_SIGNIN_API=${{ secrets.FIREBASE_SIGNIN_API }} \
-            --build-env FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
+            --build-env FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}\
+             --build-env API_URL=${{ secrets.API_URL }}
