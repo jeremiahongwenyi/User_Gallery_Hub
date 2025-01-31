@@ -3,26 +3,22 @@
   "name": "user_gallery_app",
   "builds": [
     {
-      "src": "dist/user-gallery-hub/browser/**/*",
+      "src": "dist/user-gallery-hub/server/main.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dist/user-gallery-hub/browser/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/dist/user-gallery-hub/browser/$1"
+      "src": "/assets/(.*)",
+      "dest": "/dist/user-gallery-hub/browser/assets/$1"
     },
     {
-      "src": "/.*",
-      "dest": "/dist/user-gallery-hub/browser/index.html"
+      "src": "/(.*)",
+      "dest": "/dist/user-gallery-hub/server/main.js"
     }
-  ],
-  "build": {
-    "env": {
-      "FIREBASE_API_KEY": "@firebase_api_key",
-      "FIREBASE_SIGNUP_API": "@firebase_signup_api",
-      "FIREBASE_SIGNIN_API": "@firebase_signin_api",
-      "FIREBASE_DATABASE_URL": "@firebase_database_url"
-    }
-  }
+  ]
 }

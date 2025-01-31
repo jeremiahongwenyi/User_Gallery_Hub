@@ -39,9 +39,6 @@ jobs:
           export CHROME_BIN=/usr/bin/google-chrome
           npm run test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Install ts-node
-        run: npm install -g ts-node typescript
-
       - name: Build
         run: npm run build User_Gallery_Hub -- --configuration production
         env:
@@ -49,42 +46,41 @@ jobs:
           FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
           FIREBASE_SIGNIN_API: ${{ secrets.FIREBASE_SIGNIN_API }}
           FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/user-gallery-hub/browser
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main' # Only deploy on the main branch
+    if: github.ref == 'refs/heads/main'
+
     steps:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
         with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install ts-node
-        run: npm install -g ts-node typescript
-
-      - name: Build
-        run: npm run build User_Gallery_Hub -- --configuration production
-        env:
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          FIREBASE_SIGNUP_API: ${{ secrets.FIREBASE_SIGNUP_API }}
-          FIREBASE_SIGNIN_API: ${{ secrets.FIREBASE_SIGNIN_API }}
-          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          name: dist
+          path: dist/user-gallery-hub/browser
 
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel
         run: |
-          vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }} \
+          vercel deploy dist/user-gallery-hub/browser --prod --yes --token ${{ secrets.VERCEL_TOKEN }} \
             --build-env FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} \
             --build-env FIREBASE_SIGNUP_API=${{ secrets.FIREBASE_SIGNUP_API }} \
             --build-env FIREBASE_SIGNIN_API=${{ secrets.FIREBASE_SIGNIN_API }} \
             --build-env FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}
+
+      - name: Show Deploy Output
+        run: echo "Deployment Complete"
