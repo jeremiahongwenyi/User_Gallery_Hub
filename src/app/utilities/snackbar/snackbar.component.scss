@@ -43,3 +43,10 @@
     from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
   }
+  @media(max-width:390px){
+.sb{
+  top:60px;
+  margin-left: -150px;
+}
+  }
+  
