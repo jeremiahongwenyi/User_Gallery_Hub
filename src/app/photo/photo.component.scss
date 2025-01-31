@@ -1,27 +1,50 @@
-.img{
-    width: 200px;
-    height: auto;
-}
-
-.button{
-background-color: #c167ef;
-color: white;
-text-decoration: none;
-border:none;
-border-radius: 3px;
-display: inline;
-}
-
-.button:hover {
-background-color: #ae13fc;
-
-}
-
-.span{
+/* Image Styling */
+.img {
+    width: 100%;  /* Make image responsive by setting width to 100% */
+    height: auto;  /* Maintain aspect ratio */
+    max-width: 200px;  /* Set max width for larger screens */
+  }
+  
+  /* Button Styling */
+  .button {
+    background-color: #c167ef;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 8px 16px;
+  }
+  
+  .button:hover {
+    background-color: #ae13fc;
+  }
+  
+  /* Span Styling */
+  .span {
     display: inline-block;
     margin-top: 10px;
+  }
+  
+  /* Input Styling */
+  input {
+    margin-top: 15px;
+    width: 100%;  /* Make input take full width */
+    max-width: 600px;  /* Set max width for larger screens */
+    padding: 8px;
+    box-sizing: border-box;
+    display: block;
+  }
+
+@media(min-width:225px){
+    .image-container{
+        margin:0 20%
+    }
 }
 
-input {
-    margin-top: 15px;
+@media(min-width:500px){
+    .image-container{
+margin: 0 30%
+    }
 }
+  
