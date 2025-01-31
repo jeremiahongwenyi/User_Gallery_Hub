@@ -57,7 +57,8 @@ $spacers: (
   overflow: hidden;
 }
 
-.head{
+
+h1.head, .head2{
   text-align: center;
   color: #1c59d6;
   margin-bottom: 20px;
@@ -127,7 +128,7 @@ $spacers: (
 /* Responsive Design with Adjusted Font Size */
 
 @media(max-width:382px){
-  .head{
+  h1.head{
     margin-top: 20px;
   }
 }

@@ -13,7 +13,7 @@ describe('LoginComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['login', 'signup']);
+    mockAuthService = jasmine.createSpyObj('AuthService', ['login', 'signup', 'loggedInState']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
@@ -46,26 +46,6 @@ describe('LoginComponent', () => {
     expect(component.isLoginMode).toBeTrue();
   });
 
-  it('should call login method of AuthService when logging in', () => {
-    mockAuthService.login.and.returnValue(
-      of({
-        token: '123',
-        idToken: 'idToken123',
-        email: 'user@example.com',
-        refreshToken: 'refreshToken123',
-        expiresIn: '3600',   
-        localId: 'localId123'
-      } as AuthResponse)
-    );
-    
-
-    component.isLoginMode = true;
-    component.onFormSubmitted({ value: { email: 'test@example.com', password: 'password' }, reset: () => {return } } as NgForm);
-
-    expect(mockAuthService.login).toHaveBeenCalledWith('test@example.com', 'password');
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
-  });
-
   it('should call signup method of AuthService when signing up', () => {
     mockAuthService.signup.and.returnValue(
       of({
@@ -73,25 +53,61 @@ describe('LoginComponent', () => {
         idToken: 'idToken123',
         email: 'user@example.com',
         refreshToken: 'refreshToken123',
-        expiresIn: '3600',  
+        expiresIn: '3600',
         localId: 'localId123'
       } as AuthResponse)
     );
-    
+
     component.isLoginMode = false;
-    component.onFormSubmitted({ value: { email: 'test@example.com', password: 'password' }, reset: () => { return } } as NgForm);
+
+    // Create a mock NgForm object with only necessary properties
+    const mockForm = { value: { email: 'test@example.com', password: 'password' }, reset: jasmine.createSpy() } as Partial<NgForm> as NgForm;
+
+    component.onFormSubmitted(mockForm);
 
     expect(mockAuthService.signup).toHaveBeenCalledWith('test@example.com', 'password');
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
+    expect(component.isLoading).toBeFalse();
+    expect(mockForm.reset).toHaveBeenCalled();
+  });
+
+  it('should call login method of AuthService when logging in', () => {
+    mockAuthService.login.and.returnValue(
+      of({
+        token: '123',
+        idToken: 'idToken123',
+        email: 'user@example.com',
+        refreshToken: 'refreshToken123',
+        expiresIn: '3600',
+        localId: 'localId123'
+      } as AuthResponse)
+    );
+
+    component.isLoginMode = true;
+
+    // Create a mock NgForm object with only necessary properties
+    const mockForm = { value: { email: 'test@example.com', password: 'password' }, reset: jasmine.createSpy() } as Partial<NgForm> as NgForm;
+
+    component.onFormSubmitted(mockForm);
+
+    expect(mockAuthService.login).toHaveBeenCalledWith('test@example.com', 'password');
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
+    expect(component.isLoading).toBeFalse();
+    expect(mockForm.reset).toHaveBeenCalled();
   });
 
   it('should show an error message if authentication fails', () => {
     mockAuthService.login.and.returnValue(throwError(() => 'Invalid credentials'));
 
     component.isLoginMode = true;
-    component.onFormSubmitted({ value: { email: 'test@example.com', password: 'password' }, reset: () => {return;} } as NgForm);
+
+    // Create a mock NgForm object with only necessary properties
+    const mockForm = { value: { email: 'test@example.com', password: 'password' }, reset: jasmine.createSpy() } as Partial<NgForm> as NgForm;
+    component.onFormSubmitted(mockForm);
 
     expect(component.errorMessage).toBe('Invalid credentials');
+    expect(component.isLoading).toBeFalse();
+    expect(mockForm.reset).toHaveBeenCalled();
   });
 
   it('should clear the error message after 3 seconds', (done) => {

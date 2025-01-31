@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <div class="container">
         <a href="index.html" class="navbar-brand">
             <img src="assets/favicon.png" alt="logo" class="pt-0">
@@ -19,19 +18,44 @@
                     <a href="" class="nav-link fw-semibold">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link fw-semibold">Photo</a>
-                </li>
-                <li class="nav-item">
-                    <a
-                      href="contact.html"
-                      class="nav-link btn btn-outline-light fw-semibold px-4 mx-4"
-                      >Login</a
+                    <div
+                      (click)="onPhotoClicked()"
+                      (keydown)="onPhotoClicked()"
+                      tabindex="0" 
+                      role="button" 
+                      aria-label="Navigate to photo section"
                     >
+                      <a class="nav-link fw-semibold">Photo</a>
+                    </div>
                   </li>
+                  
+                  <li class="nav-item">
+                    <div
+                      *ngIf="!isLoggedIn"
+                      (click)="onLoginClicked()"
+                      (keydown)="onLoginClicked()"
+                      tabindex="0" 
+                      role="button"
+                      aria-label="Navigate to login page"
+                    >
+                      <a class="nav-link fw-semibold px-4 mx-4">Login</a>
+                    </div>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <div
+                      *ngIf="isLoggedIn"
+                      (click)="onLogoutClicked()"
+                      (keydown)="onLogoutClicked()"
+                      tabindex="0" 
+                      role="button"
+                      aria-label="Log out"
+                    >
+                      <a class="nav-link fw-semibold px-4 mx-4">Logout</a>
+                    </div>
+                  </li>
+                  
             </ul>
         </div>
     </div>
 </nav>
-
-
-  

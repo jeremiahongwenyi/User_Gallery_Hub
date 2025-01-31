@@ -23,6 +23,8 @@ export class AuthService {
   signInApi:string = environment.firebaseConfig.firebaseSignInApi
   apiKey:string =environment.firebaseConfig.firebaseApiKey
   Authuser = new BehaviorSubject<AuthUser>(null);
+  private loggedIn = new BehaviorSubject<boolean>(false)
+  $loggedIn =this.loggedIn.asObservable()
   private tokenExpiretimer= null;
 
   signup(email, password){
@@ -49,8 +51,14 @@ login(email, password){
 
 logout(){
     this.Authuser.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/landing']);
     localStorage.removeItem('Authuser');
+    localStorage.removeItem('albums');
+    localStorage.removeItem('users');
+    localStorage.removeItem('userAlbums');
+    localStorage.removeItem('selectedUser');
+    localStorage.removeItem('selectedAlbum');
+    localStorage.removeItem('selectedAlbumPhotos');
 
     if(this.tokenExpiretimer){
         clearTimeout(this.tokenExpiretimer);
@@ -78,6 +86,10 @@ autoLogout(expireTime: number){
     this.tokenExpiretimer = setTimeout(() => {
         this.logout();
     }, expireTime);
+}
+
+loggedInState(isloggedin):void{
+  this.loggedIn.next(isloggedin)
 }
 
 private handleCreateUser(res){

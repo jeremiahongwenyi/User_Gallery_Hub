@@ -103,7 +103,7 @@ describe('AuthService', () => {
       
       expect(service.Authuser.value).toBeNull();
       expect(localStorage.getItem('Authuser')).toBeNull();
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/landing']);
     });
   });
 });

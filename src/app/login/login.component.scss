@@ -1,16 +1,33 @@
-
-.app-login-form{
-    width: 520px;
-    height: 360px;
+.app-login-form {
+    width: 60vw; 
+    max-width: 600px; 
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 30px 30px;
+    padding: 30px;
     border-radius: 10px;
     margin: 75px auto;
+    background-color: #fff; /* Ensures visibility */
 }
 
-.app-toggle-btn{
+.app-toggle-btn {
     text-decoration: none;
     border: none;
     color: #10bcee;
     background-color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .app-login-form {
+        width: 80vw; /* Increase width on smaller screens */
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-login-form {
+        width: 90vw; /* Ensure usability on very small screens */
+        padding: 15px;
+    }
 }

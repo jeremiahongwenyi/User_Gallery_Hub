@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { canActivate } from './RouteGuards/AuthGuard';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { LandingpageComponent } from './landingpage/landingpage.component';
@@ -11,11 +12,11 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
 {path:'', redirectTo:'/landing', pathMatch:'full'},
 {path:'landing', component:LandingpageComponent},
-{path:'home', component:HomeComponent},
-{path:'users', component:UserComponent},
-{path:'albums', component: AlbumComponent},
-{path:'photos', component: PhotoComponent},
-{path:'login', component:LoginComponent},
+{ path: 'home', component: HomeComponent, canActivate: [canActivate] },
+{ path: 'users', component: UserComponent, canActivate: [canActivate] },
+{ path: 'albums', component: AlbumComponent, canActivate: [canActivate] },
+{ path: 'photos', component: PhotoComponent, canActivate: [canActivate] },
+{ path: 'login', component: LoginComponent },
 {path:'**', component:Error404Component}
 ];
 

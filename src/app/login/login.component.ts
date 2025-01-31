@@ -41,6 +41,7 @@ export class LoginComponent {
     this.authObs?.subscribe({
       next: (res) => { 
         console.log(res);
+        this.authService.loggedInState(true)
         this.isLoading = false; 
         this.router.navigate(['/home']);
       },
