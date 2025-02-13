@@ -52,14 +52,8 @@ login(email, password){
 logout(){
     this.Authuser.next(null);
     this.router.navigate(['/landing']);
-    localStorage.removeItem('Authuser');
-    localStorage.removeItem('albums');
-    localStorage.removeItem('users');
-    localStorage.removeItem('userAlbums');
-    localStorage.removeItem('selectedUser');
-    localStorage.removeItem('selectedAlbum');
-    localStorage.removeItem('selectedAlbumPhotos');
-    localStorage.removeItem('allPhotos');
+    localStorage.clear()
+    // this.loggedIn.next(false) for autologout
 
     if(this.tokenExpiretimer){
         clearTimeout(this.tokenExpiretimer);

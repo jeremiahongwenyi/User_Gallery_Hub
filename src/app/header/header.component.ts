@@ -19,8 +19,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.$loggedIn.subscribe({
-      next: (isloggedin) => {
-        this.isLoggedIn = isloggedin;
+      next: () => {
+        // this.isLoggedIn = isloggedin; no need to have this
         if (typeof window !== 'undefined' && window.localStorage) {
           if (localStorage.getItem('Authuser')) {
             this.isLoggedIn = true;
@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
 
   onLogoutClicked(){
     this.authService.logout()
-    this.isLoggedIn=false
+    this.isLoggedIn=false  /* u can choose to emit it from the logout function*/
   }
 
   onHomeClicked(){

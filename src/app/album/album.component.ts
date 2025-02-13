@@ -40,10 +40,11 @@ export class AlbumComponent implements OnInit{
   getAlbum(){
     if(typeof window !== 'undefined' && window.localStorage){
       const selectedAlbum = localStorage.getItem('selectedAlbum')
-      if(selectedAlbum){
-        this.selectedAlbum=JSON.parse(selectedAlbum)
-        this.selectedAlbumId = this.selectedAlbum[0].id
-    
+      const storedAlbum = selectedAlbum? JSON.parse(selectedAlbum) : null
+      
+      if(storedAlbum && storedAlbum[0].albumId == this.selectedAlbumId ){
+        this.selectedAlbumId = storedAlbum[0].id 
+        console.log(this.selectedAlbumId);
         
       }else {
         this.isLoading=true;
@@ -69,7 +70,8 @@ export class AlbumComponent implements OnInit{
     this.isLoading=true;
     if(typeof window !== 'undefined' && window.localStorage){
       const selectedAlbumPhotos = localStorage.getItem('selectedAlbumPhotos')
-      if(selectedAlbumPhotos){
+      const storedAlbumPhotos = selectedAlbumPhotos? JSON.parse(selectedAlbumPhotos) : null
+      if(selectedAlbumPhotos && storedAlbumPhotos.length > 0 && storedAlbumPhotos[0].albumId == this.selectedAlbumId){
         this.albumPhotos=JSON.parse(selectedAlbumPhotos)
         this.isLoading= false;
         this.responseArrived=true

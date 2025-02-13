@@ -68,20 +68,19 @@ describe('AlbumComponent', () => {
     );
   });
 
-  it('should load album from localStorage if available', () => {
-    const storedAlbum = JSON.stringify([{ id: 1, title: 'Stored Album', userId: 1 }]);
-    spyOn(localStorage, 'getItem').and.returnValue(storedAlbum);
-  
+  it('should load album ID from localStorage when matching albumId exists', () => {
+    const storedAlbumData = JSON.stringify([{ albumId: 1, id: 1, title: 'Stored Album', userId: 1 }]);
+    
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => key === 'selectedAlbum' ? storedAlbumData : null);
+    
+    component.selectedAlbumId = 1;
+    
     component.getAlbum();
-  
-    expect(component.selectedAlbum).toEqual(
-      jasmine.objectContaining([{
-        id: 1,
-        title: 'Stored Album',
-        userId: 1
-      }])
-    );
+    
+    expect(userServiceMock.getAlbumWithId).not.toHaveBeenCalled();
+    expect(component.selectedAlbumId).toEqual(1);
   });
+  
   
 
   it('should fetch photos from service when localStorage has no selectedAlbumPhotos', () => {
@@ -106,20 +105,20 @@ describe('AlbumComponent', () => {
     const storedPhotos = JSON.stringify([
       { albumId: 1, id: 1, title: 'Stored Photo', url: 'stored.jpg', thumbnailUrl: 'stored_thumb.jpg' }
     ]);
-    spyOn(localStorage, 'getItem').and.returnValue(storedPhotos);
+  
+    component.selectedAlbumId = 1;
 
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      return key === 'selectedAlbumPhotos' ? storedPhotos : null;
+    });
+  
     component.getPhotos();
-
-    expect(component.albumPhotos).toEqual([
-      {
-        albumId: 1,
-        id: 1,
-        title: 'Stored Photo',
-        url: 'stored.jpg',
-        thumbnailUrl: 'stored_thumb.jpg'
-      }
-    ]);
+  
+    expect(component.albumPhotos).toEqual(JSON.parse(storedPhotos));
+    expect(component.isLoading).toBeFalse();
+    expect(component.responseArrived).toBeTrue();
   });
+  
 
   it('should set isLoading correctly while fetching album', () => {
     spyOn(localStorage, 'getItem').and.returnValue(null);

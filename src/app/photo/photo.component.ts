@@ -28,6 +28,7 @@ export class PhotoComponent implements OnInit {
         
         this.userService.getPhotos().subscribe({
           next: (photos) => {
+            console.log(photos);   
             localStorage.setItem('allPhotos', JSON.stringify(photos));
             this.allPhotos = photos;
             this.newTitle = this.allPhotos[0].title;
@@ -53,13 +54,14 @@ export class PhotoComponent implements OnInit {
       id: this.allPhotos[0].id,
       title: this.newTitle,
       url: this.allPhotos[0].url,
-      thumbnailUrl: this.allPhotos[0].thumbnailUrl
+      thumbnailUrl: this.allPhotos[0].thumbnailUrl,
     };
-    this.userService.editPhoto(this.allPhotos[0].id, data).subscribe({
+    this.userService.editPhoto(this.allPhotos[0].databaseId, data).subscribe({
       next: (resp: Photo) => {
         console.log(resp);
-        this.allPhotos[0] = resp;
+        this.allPhotos= [resp];
         this.newTitle=resp.title
+        localStorage.removeItem('allPhotos')
         localStorage.setItem('allPhotos', JSON.stringify(this.allPhotos));
       },
       error: (err) => {
@@ -67,4 +69,15 @@ export class PhotoComponent implements OnInit {
       }
     });
   }
+
+//   setNewData(){
+//     const Photo = {
+//       albumId: 1,
+//       id: 1,
+//       title: 'User Photo',
+//       url: 'assets/photo.jpg',
+//       thumbnailUrl: 'assets/photo.jpg'
+//   }
+//   this.userService.newPhoto(Photo)
+// }
 }

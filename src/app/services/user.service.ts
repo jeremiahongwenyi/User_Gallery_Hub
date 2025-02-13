@@ -16,14 +16,23 @@ export class UserService {
     private loggingService: LoggingService
   ) { }
 
-  private clickedUserId: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  private clickedUserId: BehaviorSubject<number> = new BehaviorSubject<number>(
+    localStorage.getItem('selectedUserId') ? 
+    Number (localStorage.getItem('selectedUserId')) : 
+    null
+  );
   $clickedUserId = this.clickedUserId.asObservable();
 
-  private clickedAlbumId: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  private clickedAlbumId: BehaviorSubject<number> = new BehaviorSubject<number>(
+    localStorage.getItem('selectedAlbumId')? 
+    Number(localStorage.getItem('selectedAlbumId')) :
+    null
+  );
   $clickedAlbumId = this.clickedAlbumId.asObservable();
   apiUrl: string = environment.apiUrl;
 
 
+  
   fetchUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`).pipe(
       tap((users) => localStorage.setItem('users', JSON.stringify(users))),
@@ -74,11 +83,13 @@ export class UserService {
   }
 
   emitUser(userId) {
+    localStorage.setItem('selectedUserId', userId.toString());
     console.log('arrived');
     this.clickedUserId.next(userId);
   }
 
   emitAlbum(albumId) {
+    localStorage.setItem('selectedAlbumId',albumId.toString())
     this.clickedAlbumId.next(albumId);
   }
 
@@ -97,7 +108,7 @@ export class UserService {
         // Iterate through the response and map the data
         for (const key in response) {  // Use 'const' since 'key' is not reassigned
           if (Object.hasOwn(response, key)) {
-            photos.push({ ...response[key] });  // Add the photo object to the photos array
+            photos.push({ ...response[key], databaseId:key });  // Add the photo object to the photos array
           }
         }
   
@@ -111,8 +122,8 @@ export class UserService {
   
 
 
- editPhoto(id: number | undefined, data: Photo){
-  return this.http.put(`${environment.firebaseConfig.firebaseDatabaseURL}/photos+id+'.json`, data)
+ editPhoto(id: string, data: Photo){
+  return this.http.put(`${environment.firebaseConfig.firebaseDatabaseURL}/photos/${id}.json`, data)
   .pipe(catchError((err) => {
       //Write the logic to log errors
       const errorObj = {statusCode: err.status, errorMessage: err.message, datetime: new Date()}
@@ -121,6 +132,10 @@ export class UserService {
   }))
   
 }
+
+// newPhoto(data:Photo){
+// this.http.post(`${environment.firebaseConfig.firebaseDatabaseURL}/photos.json`,data).subscribe()
+// }
 
    
    private handleError(err:HttpErrorResponse) {

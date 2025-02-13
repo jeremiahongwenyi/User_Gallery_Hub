@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserComponent } from './user.component';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { Album } from '../models/album';
 
 describe('UserComponent', () => {
@@ -10,11 +10,11 @@ describe('UserComponent', () => {
   let fixture: ComponentFixture<UserComponent>;
   let userServiceMock=null;
   let routerMock=null;
-  let userIdSubject: Subject<number>;
+  let userIdSubject: BehaviorSubject<number>;
 
   beforeEach(async () => {
-    userIdSubject = new Subject<number>();
-
+    localStorage.clear();
+    userIdSubject = new BehaviorSubject<number>(null);
     userServiceMock = {
       $clickedUserId: userIdSubject.asObservable(),
       getUserWithId: jasmine.createSpy('getUserWithId').and.returnValue(of({ 
@@ -72,12 +72,17 @@ describe('UserComponent', () => {
   
 
   it('should fetch user from localStorage when available', () => {
-    const mockUser = JSON.stringify({ id: 1, name: 'Stored User', username: 'storeduser', email: 'stored@example.com' });
-    spyOn(localStorage, 'getItem').and.callFake((key) => key === 'selectedUser' ? mockUser : null);
+    const mockUserArray = JSON.stringify([{ id: 1, name: 'Stored User', username: 'storeduser', email: 'stored@example.com' }]);
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      return key === 'selectedUser' ? mockUserArray : null;
+    });
+
+    component.selectedUserId = 1;
 
     component.getUser();
 
-    expect(component.selectedUser).toEqual(JSON.parse(mockUser));
+    expect(component.responseArrived).toBeTrue();
+  expect(component.selectedUser).toEqual(JSON.parse(mockUserArray));
   });
 
   it('should fetch albums from service when localStorage has no userAlbums', () => {
@@ -92,15 +97,22 @@ describe('UserComponent', () => {
     expect(component.responseArrived).toBeTrue();
   });
 
-  it('should fetch albums from localStorage when available', () => {
+  it('should load albums from localStorage if available and matching selectedUserId', () => {
     const mockAlbums = JSON.stringify([{ userId: 1, id: 1, title: 'Stored Album' }]);
-    spyOn(localStorage, 'getItem').and.callFake((key) => key === 'userAlbums' ? mockAlbums : null);
-
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      return key === 'userAlbums' ? mockAlbums : null;
+    });
+    
+    component.selectedUserId = 1;
+    
     component.getAlbums();
-
+    
     expect(component.userAlbums).toEqual(JSON.parse(mockAlbums));
     expect(component.isLoading).toBeFalse();
+    expect(userServiceMock.getAlbumsForUser).not.toHaveBeenCalled();
   });
+  
+  
 
   it('should call emitAlbum and navigate on album click', () => {
     const album: Album = { userId: 1, id: 1, title: 'Test Album' };

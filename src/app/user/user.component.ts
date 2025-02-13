@@ -28,12 +28,13 @@ export class UserComponent implements OnInit{
 
   ngOnInit(): void {
       this.userService.$clickedUserId.subscribe({
-        next:(userId)=>{
-            this.selectedUserId=userId
+        next: (userId) => {
+          if (userId) {  // Only proceed if we have a userId
+            this.selectedUserId = userId;
             console.log(this.selectedUserId);
             this.getUser();
             this.getAlbums();
-            
+          }
         },
         error:(err)=>{
           console.log(err);
@@ -45,10 +46,11 @@ export class UserComponent implements OnInit{
   getUser(){   
   if (typeof window !== 'undefined' && window.localStorage){
     const selectedUser = localStorage.getItem('selectedUser')
-    if (selectedUser){
+    const storedUser = selectedUser ? JSON.parse(selectedUser) : null;
+    console.log(storedUser);
+    if (storedUser && storedUser[0].id === this.selectedUserId){
       this.responseArrived=true;
-      this.selectedUser = JSON.parse(selectedUser)
-
+      this.selectedUser = storedUser
     } else {
       this.userService.getUserWithId(this.selectedUserId).subscribe({
         next:(user)=>{
@@ -72,9 +74,10 @@ export class UserComponent implements OnInit{
     this.isLoading=true;
     if(typeof window !== 'undefined' && window.localStorage){
       const userAlbums = localStorage.getItem('userAlbums')
+      const storedAlbums = userAlbums ? JSON.parse(userAlbums) : null;
       
-      if(userAlbums){
-        this.userAlbums=JSON.parse(userAlbums)
+      if(storedAlbums && storedAlbums.length > 0 && storedAlbums[0].userId === this.selectedUserId) {
+        this.userAlbums=storedAlbums
         this.isLoading= false;
         
       } else {
