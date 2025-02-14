@@ -133,10 +133,6 @@ export class UserService {
   
 }
 
-// newPhoto(data:Photo){
-// this.http.post(`${environment.firebaseConfig.firebaseDatabaseURL}/photos.json`,data).subscribe()
-// }
-
    
    private handleError(err:HttpErrorResponse) {
     console.log(err);
